@@ -52,13 +52,6 @@ OPERATOR_SDK_VERSION ?= unknown
 # Image URL to use all building/pushing image targets
 IMG ?= controller:latest
 
-# Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
-ifeq (,$(shell go env GOBIN))
-GOBIN=$(shell go env GOPATH)/bin
-else
-GOBIN=$(shell go env GOBIN)
-endif
-
 # CONTAINER_TOOL defines the container tool to be used for building images.
 # Be aware that the target commands are only tested with Docker which is
 # scaffolded by default. However, you might want to replace it to use other
@@ -173,20 +166,20 @@ endif
 
 .PHONY: install
 install: manifests ## Install CRDs into the K8s cluster specified in ~/.kube/config.
-	kustomize build config/crd | $(KUBECTL) apply -f -
+	kustomize build config/crd | kubectl apply -f -
 
 .PHONY: uninstall
 uninstall: manifests ## Uninstall CRDs from the K8s cluster specified in ~/.kube/config. Call with ignore-not-found=true to ignore resource not found errors during deletion.
-	kustomize build config/crd | $(KUBECTL) delete --ignore-not-found=$(ignore-not-found) -f -
+	kustomize build config/crd | kubectl delete --ignore-not-found=$(ignore-not-found) -f -
 
 .PHONY: deploy
 deploy: manifests ## Deploy controller to the K8s cluster specified in ~/.kube/config.
 	cd config/manager && kustomize edit set image controller=${IMG}
-	kustomize build config/default | $(KUBECTL) apply -f -
+	kustomize build config/default | kubectl apply -f -
 
 .PHONY: undeploy
 undeploy: ## Undeploy controller from the K8s cluster specified in ~/.kube/config. Call with ignore-not-found=true to ignore resource not found errors during deletion.
-	kustomize build config/default | $(KUBECTL) delete --ignore-not-found=$(ignore-not-found) -f -
+	kustomize build config/default | kubectl delete --ignore-not-found=$(ignore-not-found) -f -
 
 ##@ Dependencies
 
@@ -194,9 +187,6 @@ undeploy: ## Undeploy controller from the K8s cluster specified in ~/.kube/confi
 LOCALBIN ?= $(shell pwd)/bin
 $(LOCALBIN):
 	mkdir -p $(LOCALBIN)
-
-## Tool Binaries
-KUBECTL ?= kubectl
 
 .PHONY: bundle
 bundle: manifests ## Generate bundle manifests and metadata, then validate generated files.

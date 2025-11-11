@@ -50,6 +50,7 @@
               [
                 golangci-lint
                 kind
+                kubectl
                 kubernetes-controller-tools
                 kustomize
                 operator-sdk
