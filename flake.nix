@@ -48,6 +48,7 @@
             packages =
               with pkgs;
               [
+                golangci-lint
                 kind
                 kubernetes-controller-tools
                 kustomize
