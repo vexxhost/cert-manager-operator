@@ -1,0 +1,9 @@
+apiVersion: infra.vexxhost.cloud/v1alpha1
+kind: CertManager
+metadata:
+  labels:
+    app.kubernetes.io/name: cert-manager-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: default
+spec:
+  # TODO(user): Add fields here
