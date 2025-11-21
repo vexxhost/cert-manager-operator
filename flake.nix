@@ -52,8 +52,10 @@
                 kind
                 kubectl
                 kubernetes-controller-tools
+                kubernetes-helm
                 kustomize
                 operator-sdk
+                vendir
               ]
               ++ (builtins.attrValues config.treefmt.build.programs);
 
